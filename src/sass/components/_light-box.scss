@@ -1,0 +1,110 @@
+#lboverlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  background: #999;
+  width: 100%;
+  height: 100%;
+  opacity: 0.8;
+  z-index: 100;
+}
+
+#lbpopup {
+  position: absolute;
+  top: 34%;
+  left: 45%;
+  width: 31%;
+  margin-left: -250px;
+  /*Halfthevalueofwidthtocenterdiv*/
+  margin-top: -250px;
+  /*Halfthevalueofheighttocenterdiv*/
+  z-index: 200;
+  border-radius: 2rem;
+}
+.arrow {
+  position: absolute;
+  z-index: 9;
+  top: 35%;
+  background-color: #fff;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  img:hover {
+    cursor: pointer;
+    filter: brightness(0) saturate(100%) invert(60%) sepia(29%) saturate(4996%)
+      hue-rotate(347deg) brightness(101%) contrast(101%);
+  }
+  &--right {
+    right: 0;
+    transform: translateX(50%);
+  }
+  &--left {
+    left: 0;
+    transform: translateX(-50%);
+  }
+}
+
+.lbcontrols {
+  position: absolute;
+  right: 0;
+  top: -6%;
+}
+
+#lbclose {
+  width: 2rem;
+  float: right;
+  cursor: pointer;
+
+  filter: brightness(0) saturate(100%) invert(60%) sepia(29%) saturate(4996%)
+    hue-rotate(347deg) brightness(101%) contrast(101%);
+}
+#lbclose:hover {
+  cursor: pointer;
+}
+.lbcontent {
+  .swiper {
+    border-radius: 2rem;
+  }
+  img {
+    width: 100%;
+  }
+  .cart-thumbnail {
+    position: relative;
+    display: block;
+    &:hover::after {
+      @include whiteLayer;
+    }
+    &.white-layer {
+      &::after {
+        @include whiteLayer;
+      }
+    }
+    &-box {
+      display: flex;
+      width: 100%;
+      padding: 6% 8% 0;
+      gap: 7%;
+    }
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: 8px;
+      border: none;
+    }
+    // width: 80%;
+
+    &-active {
+      &::after {
+        content: "";
+        border: 2px solid $Orange;
+      }
+    }
+  }
+}
+
+#button {
+  cursor: pointer;
+}

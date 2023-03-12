@@ -1,0 +1,284 @@
+<header class="main-header">
+  <nav [class.menu-active]="showMenu" class="menu">
+    <div class="menu-overlay" (click)="showMenu = false"></div>
+    <div class="menu-popup">
+      <div class="menu-controls">
+        <img
+          id="menu-close"
+          (click)="showMenu = false"
+          src="assets/images/icon-close.svg"
+          alt="close icon"
+        />
+      </div>
+      <div class="menu-content">
+        <ul class="menu-list">
+          <li class="menu-list_item">Collections</li>
+          <li class="menu-list_item">Men</li>
+          <li class="menu-list_item">Women</li>
+          <li class="menu-list_item">About</li>
+          <li class="menu-list_item">Contact</li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <img
+    (click)="showMenu = true"
+    class="menu-icon"
+    src="assets/images/icon-menu.svg"
+    alt="menu-icon"
+  />
+  <a class="category-name">
+    <span> Sneakers </span>
+  </a>
+  <nav class="main-nav">
+    <ul class="main-nav-list">
+      <li class="m"><a class="main-nav-link" href="#how">Collections</a></li>
+      <li><a class="main-nav-link" href="#meals">Men</a></li>
+      <li>
+        <a class="main-nav-link" href="#testimonials">Women</a>
+      </li>
+      <li><a class="main-nav-link" href="#pricing">About</a></li>
+      <li><a class="main-nav-link nav-cta" href="#cta">Contact</a></li>
+    </ul>
+  </nav>
+  <ul class="my__ac-list">
+    <li
+      *ngIf="isDesktop"
+      class="cart-btn"
+      (click)="openCart()"
+      (mouseenter)="openCart()"
+      id="cartBtn des"
+    >
+      <img
+        class="cart-icon"
+        src="assets/images/icon-cart.svg"
+        alt="cart icon"
+      />
+      <p *ngIf="cartItems.length" class="cart--strip">
+        {{ cartItems[0].quantity }}
+      </p>
+    </li>
+    <li class="cart-btn" *ngIf="!isDesktop" (click)="openCart()" id="cartBtn">
+      <img
+        class="cart-icon"
+        src="assets/images/icon-cart.svg"
+        alt="cart icon"
+      />
+      <p *ngIf="cartItems.length" class="cart--strip">
+        {{ cartItems[0].quantity }}
+      </p>
+    </li>
+    <li>
+      <img
+        class="profile-thumbnail"
+        src="assets/images/image-avatar.png"
+        alt="image-avatar"
+      />
+    </li>
+  </ul>
+</header>
+<hr class="hr-line" />
+<main>
+  <div class="container grid grid--2-cols u-pb-2">
+    <div class="product-photos wrap">
+      <div id="content">
+        <div
+          class="arrow arrow--left"
+          (click)="choosePicture(sliderIndex ? sliderIndex - 1 : sliderIndex)"
+        >
+          <img src="assets/images/icon-previous.svg" alt="icon-previous" />
+        </div>
+        <div
+          (click)="choosePicture(sliderIndex + 1)"
+          class="arrow arrow--right"
+        >
+          <img src="assets/images/icon-next.svg" alt="icon-next" />
+        </div>
+        <swiper
+          #mainSlider
+          class="mySwiper"
+          [config]="sliderConfig"
+          (slideChange)="onSlideChange($event)"
+        >
+          <ng-template swiperSlide *ngFor="let img of images">
+            <div
+              class="product-photos-box"
+              (click)="openLightBox()"
+              [ngStyle]="{ 'background-image': 'url(' + img + ')' }"
+            ></div>
+          </ng-template>
+        </swiper>
+      </div>
+
+      <div class="product-thumbnail-box">
+        <ng-container *ngFor="let thumb of thumbnails; let index = index">
+          <div
+            [ngStyle]="{ background: 'url(' + thumb + ')' }"
+            class="thumb"
+            [ngClass]="{ 'thumb-active': index === sliderIndex }"
+            (click)="choosePicture(index)"
+          ></div>
+        </ng-container>
+      </div>
+    </div>
+    <div class="product-details">
+      <h3 class="product-brand">SNEAKER COMPANY</h3>
+      <h2 class="product-title">Fall Limited Edition Sneakers</h2>
+      <p class="product-description">
+        These low-profile sneakers are your perfect casual wear companion.
+        Featuring a durable rubber outer sole, they’ll withstand everything the
+        weather can offer.
+      </p>
+      <div class="product-price-box">
+        <span class="product-price"> <strong>$125.00</strong> </span>
+        <span class="product-discount">50%</span>
+      </div>
+
+      <p class="product-mrp"><strong>$250.00</strong></p>
+      <div class="add-card-box">
+        <span class="change-qty-box">
+          <span class="subtract-qty-btn" (click)="removeFromCart()"
+            ><img src="assets/images/icon-minus.svg" alt=""
+          /></span>
+          <span class="qty"
+            ><strong>{{
+              cartItems.length ? cartItems[0].quantity : 0
+            }}</strong></span
+          >
+          <span class="add-qty-btn" (click)="addToCart()">
+            <img src="assets/images/icon-plus.svg" alt="" />
+          </span>
+        </span>
+        <button
+          (click)="addToCart(this.numberOfCartItems)"
+          class="btn btn-add-cart"
+        >
+          <span>
+            <img
+              class="cart-icon"
+              src="assets/images/icon-cart.svg"
+              alt=""
+            /> </span
+          ><span> Add to cart </span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div
+    id="cart-popup"
+    [ngStyle]="{
+      display: showCart ? 'block' : 'none'
+    }"
+  >
+    <div id="popup">
+      <div class="blocker" (click)="showCart = false"></div>
+      <div class="popupcontrols">
+        <!-- <span id="popupclose" (click)="showCart = false">X</span> -->
+      </div>
+      <div
+        class="popupcontent"
+        [ngClass]="{
+          bigger: numberOfCartItems > 1
+        }"
+      >
+        <h3 class="heading">Cart</h3>
+
+        <p *ngIf="!numberOfCartItems" class="empty_msg">Your cart is empty</p>
+        <ul
+          *ngIf="numberOfCartItems"
+          class="cart--list"
+          [ngStyle]="{ height: numberOfCartItems > 1 ? '12rem' : '' }"
+        >
+          <ng-container *ngFor="let item of cartItems">
+            <li class="cart--list_item">
+              <img
+                class="product_thumbnail"
+                src="assets/images/image-product-1-thumbnail.jpg"
+                alt="product-1-image"
+              />
+              <div class="cart--list_item_details">
+                <p class="product__name">{{ item?.name }}</p>
+                <p class="product__price-box">
+                  <span class="produt__price"
+                    >${{ (item?.price).toFixed(2) }}</span
+                  >
+                  <span class="multiply_icon">x</span>
+                  <span class="product_quantity">{{ item?.quantity }}</span>
+                  <strong class="product__price-total"
+                    >${{ (item?.quantity * 125).toFixed(2) }}</strong
+                  >
+                </p>
+              </div>
+              <img
+                class="delete-icon"
+                (click)="emptyCart()"
+                src="assets/images/icon-delete.svg"
+                alt="icon-delete"
+              />
+            </li>
+          </ng-container>
+        </ul>
+        <button class="btn-checkout" *ngIf="numberOfCartItems">Checkout</button>
+      </div>
+    </div>
+  </div>
+  <div
+    [ngStyle]="{ display: showLightBox ? 'block' : 'none' }"
+    class="light-box"
+  >
+    <div id="lboverlay"></div>
+    <div id="lbpopup">
+      <div
+        class="arrow arrow--left"
+        (click)="choosePicture(sliderIndex ? sliderIndex - 1 : sliderIndex)"
+      >
+        <img src="assets/images/icon-previous.svg" alt="icon-previous" />
+      </div>
+      <div class="arrow arrow--right">
+        <img
+          src="assets/images/icon-next.svg"
+          (click)="choosePicture(sliderIndex + 1)"
+          alt="icon-next"
+        />
+      </div>
+
+      <div class="lbcontrols">
+        <!-- <span id="lbclose">X</span> -->
+        <img
+          id="lbclose"
+          (click)="closeLightBox()"
+          src="assets/images/icon-close.svg"
+          alt="close icon"
+          srcset=""
+        />
+      </div>
+      <div class="lbcontent">
+        <swiper
+          class="mySwiper"
+          (slideChange)="onSlideChange($event)"
+          #lbSlider
+          [config]="sliderConfig"
+        >
+          <ng-template swiperSlide *ngFor="let img of images">
+            <img [src]="img" alt="product1 light-box image" />
+          </ng-template>
+        </swiper>
+
+        <div class="cart-thumbnail-box">
+          <ng-container *ngFor="let thumb of thumbnails; let index = index">
+            <picture
+              (click)="choosePicture(index)"
+              class="cart-thumbnail"
+              [ngClass]="{
+                'white-layer cart-thumbnail-active': index === sliderIndex
+              }"
+            >
+              <img [src]="thumb" />
+            </picture>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

@@ -1,0 +1,33 @@
+.container {
+  /* 1140px */
+  max-width: 120rem;
+  padding: 0 3.2rem;
+  margin: 0 auto;
+  @include respond(phone) {
+    padding: 0;
+  }
+}
+
+.grid {
+  display: grid;
+  column-gap: 3.2rem;
+  row-gap: 9.6rem;
+  @include respond(phone) {
+    row-gap: 0;
+  }
+  /* margin-bottom: 9.6rem; */
+}
+
+/* .grid:last-child {
+    margin-bottom: 0;
+  } */
+
+.grid:not(:last-child) {
+  margin-bottom: 9.6rem;
+}
+.grid--2-cols {
+  grid-template-columns: repeat(2, 1fr);
+  @include respond(phone) {
+    grid-template-columns: 1fr;
+  }
+}
