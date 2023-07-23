@@ -1,5 +1,5 @@
 # The page is live at
-https://front-end-mentor-works.github.io/ecommerce-page/
+https://sinan14.github.io/ecommerce-page/
 
 # AngEcom
 
