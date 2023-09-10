@@ -125,7 +125,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
   openCart() {
     this.showCart = true;
-    console.log('open cart', this.showCart);
   }
   closeCart() {
     this.showCart = false;
