@@ -1,3 +1,6 @@
+# The page is live at
+https://sinan14.github.io/ecommerce-page/
+
 # AngEcom
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.1.
